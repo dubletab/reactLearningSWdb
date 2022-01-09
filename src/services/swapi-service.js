@@ -3,7 +3,7 @@ export default class SwapiService {
 
     _apiBase = 'https://www.swapi.tech/api'
   
-    async getResources(url){
+    getResources = async (url) => {
       const res = await fetch(`${this._apiBase}${url}`);
     
       if(!res.ok){
@@ -11,36 +11,40 @@ export default class SwapiService {
       }
     
       const body = await res.json();
+      // console.log(body);
       return body;
     }
   
-    async getAllPersons(){
+    getAllPersons = async () => {
       const res = await this.getResources(`/people/`);
       return res.results.map((el) => {
         return {id: el.uid, name: el.name}});
     }
   
-    async getPerson(id){
+    getPerson = async (id) => {
       const person = await this.getResources(`/people/${id}`);
       return this._transformPerson(person);
     }
   
-    async getAllPlanets(){
+    getAllPlanets = async () =>{
       const res = await this.getResources(`/planets/`);
-      return res.results.map(this._transformPlanet);
+      console.log(res);
+      return res.results.map((el) => {
+        return {id: el.uid, name: el.name}});
     }
   
-    async getPlanet(id){
+    getPlanet = async (id) =>{
       const planet = await this.getResources(`/planets/${id}`);
       return this._transformPlanet(planet);
     }
   
-    async getAllStarships(){
+    getAllStarships = async () =>{
       const res = await this.getResources(`/starships/`);
-      return res.results.map(this._transformStarship);
+      return res.results.map((el) => {
+        return {id: el.uid, name: el.name}});
     }
   
-    async getStarship(id){
+    getStarship = async (id) =>{
       const starship = await this.getResources(`/starships/${id}`);
       return this._transformStarship(starship);
     }
